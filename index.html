@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="es" dir="ltr">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comparte tus viajes -- Nueva York</title>
+    <link rel="stylesheet" href="styles/reset.css">
+    <link rel="stylesheet" href="styles/estilos.css">
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Segoe+UI:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+
+<body>
+    <main>
+        <header>
+            <h1>Comparte tus viajes</h1>
+            <h2>Nueva York - Central Park</h2>
+            <nav>
+                <ul>
+                    <li><a href="#descripcion">Descripción</a></li>
+                    <li><a href="#related">Fotos relacionadas</a></li>
+                    <li><a href="#revisiones">Comentarios</a></li>
+                </ul>
+            </nav>
+        </header>
+
+        <article>
+            <h3 id="descripcion">Descripción</h3>
+            <p class="titulo">Foto de Randy Connolly</p>
+            <section>
+                Esta foto del Estanque del Conservatorio en 
+                <a href="http://www.centralpark.com/">Central Park</a> en 
+                <a href="http://www1.nyc.gov/">Ciudad de Nueva York</a> 
+                fue tomada en <time datetime="2021-10-22">Octubre 22, 2021</time> con una
+                cámara Canon EOS 30D.
+            </section>
+
+            <figure>
+                <a href="https://www.upiit.ipn.mx/conocenos/convocatoriasdocentes.html">
+                    <img src="images/central-park.jpg" alt="Estanque del Conservatorio en Central Park" title="Central Park">
+                </a>
+                <figcaption>
+                    <em>Estanque del Conservatorio en Central Park</em>
+                </figcaption>
+                <div>
+                    <p>Compartir:
+                        <img src="images/social/email_16.png" alt="Compartir por email">
+                        <img src="images/social/rss_16.png" alt="Suscripción RSS">
+                        <img src="images/social/twitter_16.png" alt="Compartir en Twitter">
+                        <img src="images/social/facebook_16.png" alt="Compartir en Facebook">
+                        <img src="images/social/flickr_16.png" alt="Ver en Flickr">
+                    </p>
+                </div>
+            </figure>
+
+            <section id="related">
+                <h3>Fotos relacionadas</h3>
+                <div class="gallery-container">
+                    <button class="nav-btn prev-btn" aria-label="Foto anterior">
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    
+                    <div class="gallery-viewer">
+                        <div class="large-image-container">
+                            <img id="largeImage" src="images/related-large1.jpg" alt="Vista ampliada" class="large-image">
+                        </div>
+                        
+                        <div class="thumbnail-container">
+                            <a href="images/related-large1.jpg" class="thumbnail active" data-large="images/related-large1.jpg">
+                                <img src="images/related-square1.jpg" alt="Vista aérea de Central Park">
+                            </a>
+                            <a href="images/related-large2.jpg" class="thumbnail" data-large="images/related-large2.jpg">
+                                <img src="images/related-square2.jpg" alt="Atardecer en Central Park">
+                            </a>
+                            <a href="images/related-large3.jpg" class="thumbnail" data-large="images/related-large3.jpg">
+                                <img src="images/related-square3.jpg" alt="Estatua en Central Park">
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <button class="nav-btn next-btn" aria-label="Foto siguiente">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                </div>
+            </section>
+
+            <section id="revisiones">
+                <h2>Reseñas</h2>
+                <div>
+                    <p>Por Ricardo <time datetime="2021-09-15">15 Septiembre, 2021</time></p>
+                    <p>Tranquilo con el HDR amigo</p>
+                </div>
+                <div>
+                    <p>Por Susana en <time datetime="2021-10-01">1 Octubre, 2021</time></p>
+                    <p>Amo Central Park</p>
+                </div>
+            </section>
+        </article>
+
+        <footer>
+            <section id="inicio">
+                <a href="">Inicio</a>
+                <span>|</span>
+                <a href="">Navegación</a>
+                <span>|</span>
+                <a href="">Buscar</a>
+            </section>
+            <p><em>Copyright &copy; <time datetime="2021">2021</time> Comparte Tus Viajes</em></p>
+        </footer>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const thumbnails = document.querySelectorAll('.thumbnail');
+            const largeImage = document.getElementById('largeImage');
+            const prevBtn = document.querySelector('.prev-btn');
+            const nextBtn = document.querySelector('.next-btn');
+            let currentIndex = 0;
+
+            // Función para actualizar la imagen activa
+            function updateActiveThumbnail(index) {
+                thumbnails.forEach(thumb => thumb.classList.remove('active'));
+                thumbnails[index].classList.add('active');
+                largeImage.src = thumbnails[index].dataset.large;
+                largeImage.alt = thumbnails[index].querySelector('img').alt;
+                currentIndex = index;
+            }
+
+            // Click en miniaturas
+            thumbnails.forEach((thumb, index) => {
+                thumb.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    updateActiveThumbnail(index);
+                });
+            });
+
+            // Botones de navegación
+            prevBtn.addEventListener('click', () => {
+                currentIndex = (currentIndex - 1 + thumbnails.length) % thumbnails.length;
+                updateActiveThumbnail(currentIndex);
+            });
+
+            nextBtn.addEventListener('click', () => {
+                currentIndex = (currentIndex + 1) % thumbnails.length;
+                updateActiveThumbnail(currentIndex);
+            });
+
+            // Navegación por teclado
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'ArrowLeft') {
+                    currentIndex = (currentIndex - 1 + thumbnails.length) % thumbnails.length;
+                    updateActiveThumbnail(currentIndex);
+                } else if (e.key === 'ArrowRight') {
+                    currentIndex = (currentIndex + 1) % thumbnails.length;
+                    updateActiveThumbnail(currentIndex);
+                }
+            });
+        });
+    </script>
+</body>
+</html>
